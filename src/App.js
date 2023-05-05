@@ -84,18 +84,19 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <div>
+        <Navigation account={account} setAccount={setAccount} />
           <Routes>
             <Route path="/" element={
               <div>
-                <Navigation account={account} setAccount={setAccount} />
+                
 
-                <h2>Dappazon Zest Sellers</h2>
+                <h2>Muzon Best Sellers</h2>
 
                 {electronics && clothing && toys && (
                   <>
-                    <Section title={"Clothing & Jewelry"} items={clothing} togglePop={togglePop} />
-                    <Section title={"Electronics & Gadgets"} items={electronics} togglePop={togglePop} />
-                    <Section title={"Toys & "} items={toys} togglePop={togglePop} />
+                    <Section title={"Musical Instruments"} items={clothing} togglePop={togglePop} />
+                    <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
+                    {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
                     <Button onClick={()=>{handleMusicNft()}}> Music NFTs</Button>
                   </>
                 )}
