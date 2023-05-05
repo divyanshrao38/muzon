@@ -8,6 +8,7 @@ import Product from './components/Product'
 import MusicNFTMarketplaceAddress from './contractsData/MusicNFTMarketplace-address.json'
 import MusicNFTMarketplaceAbi from './contractsData/MusicNFTMarketplace.json'
 import { Card, Button, ButtonGroup } from 'react-bootstrap'
+import "bootstrap/dist/css/bootstrap.min.css"
 
 // ABIs
 import Dappazon from './abis/Dappazon.json'
@@ -19,9 +20,11 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  useNavigate 
+  useNavigate
 } from "react-router-dom";
 import Home from './components/Home'
+import MyResales from './components/MyResales'
+import MyTokens from './components/MyTokens'
 
 function App() {
   const [provider, setProvider] = useState(null)
@@ -46,12 +49,17 @@ function App() {
     const provider = new ethers.providers.Web3Provider(window.ethereum)
     setProvider(provider)
     const network = await provider.getNetwork()
+    const signer = provider.getSigner();
+    console.log(signer)
 
-    const dappazon = new ethers.Contract(config[network.chainId].dappazon.address, Dappazon, provider)
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    setAccount(accounts[0])
+
+    const dappazon = new ethers.Contract(config[network.chainId].dappazon.address, Dappazon, signer)
     setDappazon(dappazon)
     console.log(dappazon)
 
-    const contractMusic = new ethers.Contract(MusicNFTMarketplaceAddress.address, MusicNFTMarketplaceAbi.abi, provider)
+    const contractMusic = new ethers.Contract(MusicNFTMarketplaceAddress.address, MusicNFTMarketplaceAbi.abi, signer)
     setMusicNft(contractMusic)
     console.log("contractMusic", contractMusic)
 
@@ -75,7 +83,7 @@ function App() {
     loadBlockchainData()
   }, [])
 
-  const handleMusicNft = ()=>{
+  const handleMusicNft = () => {
     console.log('here')
     this.props.history.push("/my-nfts")
   }
@@ -84,11 +92,11 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <div>
-        <Navigation account={account} setAccount={setAccount} />
+          <Navigation account={account} setAccount={setAccount} />
           <Routes>
             <Route path="/" element={
               <div>
-                
+
 
                 <h2>Muzon Best Sellers</h2>
 
@@ -97,7 +105,7 @@ function App() {
                     <Section title={"Musical Instruments"} items={clothing} togglePop={togglePop} />
                     <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
                     {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
-                    <Button onClick={()=>{handleMusicNft()}}> Music NFTs</Button>
+                    <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button>
                   </>
                 )}
 
@@ -109,9 +117,13 @@ function App() {
             <Route path="/my-nfts" element={
               <Home contract={musicNft} />
             } />
-            {/* <Route path="/my-resales" element={
-              <MyResales contract={contract} account={account} />
-            } /> */}
+            <Route path="/my-resales" element={
+              <MyResales contract={musicNft} account={account} />
+            } />
+
+            <Route path="/my-tokens" element={
+              <MyTokens contract={musicNft} />
+            } />
           </Routes>
         </div>
       </div>

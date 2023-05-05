@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { ethers } from "ethers"
 import Identicon from 'identicon.js';
-import { Card, Button, ButtonGroup } from 'react-bootstrap'
+import { Card, Button, ButtonGroup, Modal } from 'react-bootstrap'
 
 const Home = ({ contract }) => {
   const audioRef = useRef(null);
@@ -9,6 +9,8 @@ const Home = ({ contract }) => {
   const [isPlaying, setIsPlaying] = useState(null)
   const [currentItemIndex, setCurrentItemIndex] = useState(0)
   const [marketItems, setMarketItems] = useState(null)
+  const [editModal, setEditModal] = useState(false);
+  const [rentDays, setRentDays] = useState("");
   const loadMarketplaceItems = async () => {
     // Get all unsold items/tokens
     const results = await contract.getAllUnsoldTokens()
@@ -33,6 +35,7 @@ const Home = ({ contract }) => {
     setLoading(false)
   }
   const buyMarketItem = async (item) => {
+    console.log(contract)
     await (await contract.buyToken(item.itemId, { value: item.price })).wait()
     loadMarketplaceItems()
   }
@@ -64,9 +67,26 @@ const Home = ({ contract }) => {
       audioRef.current.pause()
     }
   })
+  const handleEdit = () => {
+    setEditModal(true)
+  }
+
+  const handleEditClose = () => {
+    setEditModal(false)
+  }
   useEffect(() => {
     !marketItems && loadMarketplaceItems()
   })
+
+  const handleInputChange = (event) => {
+    setRentDays(event.target.value);
+  };
+
+  const rentItem = async (item) => {
+    console.log(item)
+    await (await contract.rentToken(item.itemId, rentDays)).wait()
+    loadMarketplaceItems()
+  }
 
   if (loading) return (
     <main style={{ padding: "1rem 0" }}>
@@ -74,8 +94,29 @@ const Home = ({ contract }) => {
     </main>
   )
   return (
-
+    <>
+<Modal show={editModal} onHide={handleEditClose}>
+          <Modal.Header closeButton>
+            <Modal.Title> Test</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <label>Rent for</label>
+          <input
+              type="text"
+              className="form-control"
+              placeholder={`Enter Days`}
+              value={rentDays}
+              onChange={handleInputChange}
+            />
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => {rentItem(marketItems[currentItemIndex])}}>
+              Edit
+            </Button>
+          </Modal.Footer>
+        </Modal>
     <div className="container-fluid mt-5">
+      
 
       {marketItems.length > 0 ?
         <div className="row">
@@ -119,6 +160,11 @@ const Home = ({ contract }) => {
                       {`Buy for ${ethers.utils.formatEther(marketItems[currentItemIndex].price)} ETH`}
                     </Button>
                   </div>
+                  <div className='d-grid my-1' style={{ textAlign: 'center' }}>
+                    <Button onClick={() =>  handleEdit()} variant="primary" size="lg" className='nav_connect'>
+                      {`Rent for ${ethers.utils.formatEther(marketItems[currentItemIndex].price)} ETH`}
+                    </Button>
+                  </div>
                 </Card.Footer>
               </Card>
             </div>
@@ -131,6 +177,7 @@ const Home = ({ contract }) => {
         )}
 
     </div >
+    </>
   );
 }
 export default Home

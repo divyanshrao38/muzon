@@ -40,6 +40,8 @@ const Navigation = ({ account, setAccount }) => {
                 <li><a href="#Electronics & Gadgets">Music Electronics</a></li>
                 {/* <li><a href="#Toys & Gaming"> </a></li> */}
                 <li><a href="/my-nfts">Music NFTs</a></li>
+                <li><a href="/my-resales">Music NFTs Resales</a></li>
+                <li><a href="/my-tokens">Music NFTs Tokens</a></li>
             </ul>
         </nav>
     );

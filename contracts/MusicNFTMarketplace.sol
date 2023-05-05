@@ -15,6 +15,8 @@ contract MusicNFTMarketplace is ERC721("DAppFi", "DAPP"), Ownable {
         uint256 tokenId;
         address payable seller;
         uint256 price;
+        string status;
+        uint256 rentDays;
     }
     MarketItem[] public marketItems;
 
@@ -45,7 +47,7 @@ contract MusicNFTMarketplace is ERC721("DAppFi", "DAPP"), Ownable {
         for (uint8 i = 0; i < _prices.length; i++) {
             require(_prices[i] > 0, "Price must be greater than 0");
             _mint(address(this), i);
-            marketItems.push(MarketItem(i, payable(msg.sender), _prices[i]));
+            marketItems.push(MarketItem(i, payable(msg.sender), _prices[i], "", 0 ));
         }
     }
 
@@ -64,6 +66,7 @@ contract MusicNFTMarketplace is ERC721("DAppFi", "DAPP"), Ownable {
             "Please send the asking price in order to complete the purchase"
         );
         marketItems[_tokenId].seller = payable(address(0));
+        marketItems[_tokenId].status = "buy";
         _transfer(address(this), msg.sender, _tokenId);
         payable(artist).transfer(royaltyFee);
         payable(seller).transfer(msg.value);
@@ -112,5 +115,51 @@ contract MusicNFTMarketplace is ERC721("DAppFi", "DAPP"), Ownable {
     /* Internal function that gets the baseURI initialized in the constructor */
     function _baseURI() internal view virtual override returns (string memory) {
         return baseURI;
+    }
+
+    /* function for renting a music nft on day basis */
+    function rentToken(uint256 _tokenId, uint256 _days) external payable returns (bool) {
+        uint256 price = 1 * _days;
+        address seller = marketItems[_tokenId].seller;
+        // require(
+        //     msg.value == price * _days,
+        //     "Please send the asking price in order to complete the purchase"
+        // );
+        marketItems[_tokenId].seller = payable(address(0));
+        marketItems[_tokenId].status = "rent";
+        marketItems[_tokenId].rentDays = _days;
+        _transfer(address(this), msg.sender, _tokenId);
+        payable(artist).transfer(royaltyFee);
+        payable(seller).transfer(msg.value);
+        emit MarketItemBought(_tokenId, seller, msg.sender, price);
+        return true;
+    }
+
+    /* function for time extension of a music nft */
+    function extendTime(uint256 _tokenId, uint256 _days) external payable returns (bool) {
+        uint256 price = marketItems[_tokenId].price;
+        address seller = marketItems[_tokenId].seller;
+        require(
+            msg.value == price * _days,
+            "Please send the asking price in order to complete the purchase"
+        );
+        payable(artist).transfer(royaltyFee);
+        payable(seller).transfer(msg.value);
+        emit MarketItemBought(_tokenId, seller, msg.sender, price);
+        return true;
+    }
+
+    /* function for time locked music nft for a specific time */
+    function lockToken(uint256 _tokenId, uint256 _days) external payable returns (bool) {
+        uint256 price = marketItems[_tokenId].price;
+        address seller = marketItems[_tokenId].seller;
+        require(
+            msg.value == price * _days,
+            "Please send the asking price in order to complete the purchase"
+        );
+        payable(artist).transfer(royaltyFee);
+        payable(seller).transfer(msg.value);
+        emit MarketItemBought(_tokenId, seller, msg.sender, price);
+        return true;
     }
 }
