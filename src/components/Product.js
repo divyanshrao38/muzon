@@ -5,8 +5,9 @@ import { ethers } from 'ethers'
 import Rating from './Rating'
 
 import close from '../assets/close.svg'
+import { Container, Row } from 'react-bootstrap'
 
-const Product = ({ item, provider, account, dappazon, togglePop }) => {
+const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) => {
   const [order, setOrder] = useState(null)
   const [hasBought, setHasBought] = useState(false)
 
@@ -30,6 +31,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
     await transaction.wait()
 
     setHasBought(true)
+    togglePop()
   }
 
   useEffect(() => {
@@ -38,11 +40,11 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
 
   return (
     <div className="product">
-      <div className="product__details">
-        <div className="product__image">
+      <Container className="product__details">
+        <Row className="product__image">
           <img src={item.image} alt="Product" />
-        </div>
-        <div className="product__overview">
+        </Row>
+        <Row className="product__overview">
           <h1>{item.name}</h1>
 
           <Rating value={item.rating} />
@@ -64,17 +66,24 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
             consectetur inventore quod soluta quos qui assumenda aperiam, eveniet doloribus
             commodi error modi eaque! Iure repudiandae temporibus ex? Optio!
           </p>
-        </div>
+        </Row>
 
-        <div className="product__order">
+        <Row className="product__order">
           <h1>{ethers.utils.formatUnits(item.cost.toString(), 'ether')} ETH</h1>
 
-          <p>
+      {myItemsPage?
+      <p>
+      Delivered on: <br />
+      <strong>
+        {new Date(Date.now() - 345600000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
+      </strong>
+    </p>
+      : <p>
             FREE delivery <br />
             <strong>
               {new Date(Date.now() + 345600000).toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
             </strong>
-          </p>
+          </p>}
 
           {item.stock > 0 ? (
             <p>In Stock.</p>
@@ -82,12 +91,12 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
             <p>Out of Stock.</p>
           )}
 
-          <button className='product__buy' onClick={buyHandler}>
+        {!myItemsPage &&  <button className='product__buy' onClick={buyHandler}>
             Buy Now
-          </button>
+          </button>}
 
-          <p><small>Ships from</small> Dappazon</p>
-          <p><small>Sold by</small> Dappazon</p>
+          <p><small>Ships from</small> Team Doge</p>
+          <p><small>Sold by</small> Team Doge</p>
 
           {order && (
             <div className='product__bought'>
@@ -104,13 +113,13 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
               </strong>
             </div>
           )}
-        </div>
+        </Row>
 
 
         <button onClick={togglePop} className="product__close">
           <img src={close} alt="Close" />
         </button>
-      </div>
+      </Container>
     </div >
   );
 }

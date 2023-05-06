@@ -10,7 +10,7 @@ const Navigation = ({ account, setAccount }) => {
     return (
         <nav>
             <div className='nav__brand'>
-                <h1>Muzon</h1>
+                <h1>Muzon <sub>By Team Doge</sub></h1>
             </div>
 
             <input
@@ -36,12 +36,12 @@ const Navigation = ({ account, setAccount }) => {
             )}
 
             <ul className='nav__links'>
-                <li><a href="#Clothing & Jewelry">Musical Instruments</a></li>
-                <li><a href="#Electronics & Gadgets">Music Electronics</a></li>
+                <li><a href="/">Musical Instruments and Electronics</a></li>
+                <li><a href="/my-items">My Items</a></li>
                 {/* <li><a href="#Toys & Gaming"> </a></li> */}
                 <li><a href="/my-nfts">Music NFTs</a></li>
                 <li><a href="/my-resales">Music NFTs Resales</a></li>
-                <li><a href="/my-tokens">Music NFTs Tokens</a></li>
+                <li><a href="/my-tokens">My Music NFTs Tokens</a></li>
             </ul>
         </nav>
     );

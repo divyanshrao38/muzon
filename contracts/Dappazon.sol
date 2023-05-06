@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+ // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
 contract Dappazon {
@@ -90,4 +90,20 @@ contract Dappazon {
         (bool success, ) = owner.call{value: address(this).balance}("");
         require(success);
     }
+
+    function getAllItems() public view  returns (Item[] memory) {
+        Item[] memory allItems = new Item[](orderCount[msg.sender]);
+
+        uint256 currentIndex = 0;
+        for (uint256 i = 1; i <= orderCount[msg.sender]; i++) {
+            Order memory currentOrder = orders[msg.sender][i];
+            Item memory currentItem = currentOrder.item;
+            allItems[currentIndex] = currentItem;
+            currentIndex++;
+        }
+
+        return allItems;
+    }
+
+
 }

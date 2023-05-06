@@ -137,14 +137,15 @@ contract MusicNFTMarketplace is ERC721("DAppFi", "DAPP"), Ownable {
 
     /* function for time extension of a music nft */
     function extendTime(uint256 _tokenId, uint256 _days) external payable returns (bool) {
-        uint256 price = marketItems[_tokenId].price;
+        uint256 price = 2 * _days;
         address seller = marketItems[_tokenId].seller;
-        require(
-            msg.value == price * _days,
-            "Please send the asking price in order to complete the purchase"
-        );
+        // require(
+        //     msg.value == price * _days,
+        //     "Please send the asking price in order to complete the purchase"
+        // );
         payable(artist).transfer(royaltyFee);
         payable(seller).transfer(msg.value);
+        marketItems[_tokenId].rentDays = marketItems[_tokenId].rentDays  + _days;
         emit MarketItemBought(_tokenId, seller, msg.sender, price);
         return true;
     }

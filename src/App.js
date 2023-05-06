@@ -5,9 +5,10 @@ import { ethers } from 'ethers'
 import Navigation from './components/Navigation'
 import Section from './components/Section'
 import Product from './components/Product'
+import MyItems from './components/MyItems'
 import MusicNFTMarketplaceAddress from './contractsData/MusicNFTMarketplace-address.json'
 import MusicNFTMarketplaceAbi from './contractsData/MusicNFTMarketplace.json'
-import { Card, Button, ButtonGroup } from 'react-bootstrap'
+import { Card, Button, ButtonGroup, Row, Container } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
 
 // ABIs
@@ -69,9 +70,10 @@ function App() {
       const item = await dappazon.items(i + 1)
       items.push(item)
     }
+    console.log(items)
 
     const electronics = items.filter((item) => item.category === 'electronics')
-    const clothing = items.filter((item) => item.category === 'clothing')
+    const clothing = items.filter((item) => item.category === 'instruments')
     const toys = items.filter((item) => item.category === 'toys')
 
     setElectronics(electronics)
@@ -83,9 +85,11 @@ function App() {
     loadBlockchainData()
   }, [])
 
-  const handleMusicNft = () => {
-    console.log('here')
-    this.props.history.push("/my-nfts")
+  const handleMusicNft = async() => {
+    const signer = await provider.getSigner()
+    console.log('here',dappazon)
+    const items = await dappazon.getAllItems()
+    console.log('here items',items)
   }
 
   return (
@@ -102,10 +106,25 @@ function App() {
 
                 {electronics && clothing && toys && (
                   <>
+
+                  <Container  className="mx-auto" fluid>
+                  <Row >
                     <Section title={"Musical Instruments"} items={clothing} togglePop={togglePop} />
+                    </Row>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <Row >
                     <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
+                    </Row >
                     {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
-                    <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button>
+                    {/* <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button> */}
+                    </Container>
                   </>
                 )}
 
@@ -123,6 +142,9 @@ function App() {
 
             <Route path="/my-tokens" element={
               <MyTokens contract={musicNft} />
+            } />
+            <Route path="/my-items" element={
+              <MyItems contract={dappazon} />
             } />
           </Routes>
         </div>

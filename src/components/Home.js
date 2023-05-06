@@ -84,7 +84,9 @@ const Home = ({ contract }) => {
 
   const rentItem = async (item) => {
     console.log(item)
-    await (await contract.rentToken(item.itemId, rentDays)).wait()
+    setEditModal(false)
+    const askingPrice = ethers.utils.parseEther((1 * rentDays).toString()); 
+    await (await contract.rentToken(item.itemId, rentDays,  { value: askingPrice })).wait()
     loadMarketplaceItems()
   }
 
@@ -111,7 +113,7 @@ const Home = ({ contract }) => {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={() => {rentItem(marketItems[currentItemIndex])}}>
-              Edit
+              Rent
             </Button>
           </Modal.Footer>
         </Modal>
