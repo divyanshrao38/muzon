@@ -79,6 +79,22 @@ contract Dappazon {
         // Add order for user
         orderCount[msg.sender]++; // <-- Order ID
         orders[msg.sender][orderCount[msg.sender]] = order;
+        uint256 percentage = (items[_id].stock-1)*100/item.stock;
+        if(percentage > 75){
+            items[_id].cost = item.cost;
+        }
+        else if(percentage<=75 && percentage>50){
+            items[_id].cost = item.cost +  100000000000000000;
+        }
+        else if(percentage<=50 && percentage>25){
+            items[_id].cost = item.cost +  250000000000000000;
+        }
+        else{
+            items[_id].cost = item.cost +  400000000000000000;
+        }
+
+        //items[_id].cost = item.cost +  250000000000000000;
+        items[_id].stock = item.stock - 1;
 
         // Subtract stock
         items[_id].stock = item.stock - 1;

@@ -58,7 +58,7 @@
       "id": 7,
       "name": "Guitar Classes",
       "category": "toys",
-      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "image": "https://ipfs.io/ipfs/QmSfNW9r73qkb1btiUFBm2EZwDMNykg1sYu6vyu4fLcLDk?filename=guitar_class.jpeg",
       "price": "1.25",
       "rating": 4,
       "stock": 100
@@ -67,7 +67,7 @@
       "id": 8,
       "name": "Piano Classes",
       "category": "toys",
-      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "image": "https://ipfs.io/ipfs/QmXHRYSrPRrHpMJ9G3aRcorij3TZyEjkgDcPoMJFE7YmDQ?filename=piano_classes.webp",
       "price": "1.25",
       "rating": 4,
       "stock": 100
@@ -76,7 +76,7 @@
       "id": 9,
       "name": "Violin Classes",
       "category": "toys",
-      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "image": "https://ipfs.io/ipfs/QmQacHrSwJ3mKMYEd5FiHHgNgPoGsoai3YSzaRX3T3vhc4?filename=violin_classes.jpeg",
       "price": "1.25",
       "rating": 4,
       "stock": 100
