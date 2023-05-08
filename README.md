@@ -1,4 +1,8 @@
 # Muzon
+
+![High level Architecture](https://user-images.githubusercontent.com/20090694/236734305-ab1f5528-dbea-4de4-b34e-672ecb845117.jpeg)
+
+
 CPSC 559 - Advance Blockchain Technology  Final Project By Team DOGE
 
 Team members: • Divyansh Mohan Rao : divyanshrao@csu.fullerton.edu (885191403)
