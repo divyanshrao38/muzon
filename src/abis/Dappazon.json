@@ -284,5 +284,33 @@
         ],
         "stateMutability": "view",
         "type": "function"
-      }
+    },
+    {
+        "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_id",
+              "type": "uint256"
+            }
+          ],
+          "name": "subscribe",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+        },
+        {
+          "inputs": [
+            {
+              "internalType": "uint256",
+              "name": "_id",
+              "type": "uint256"
+            }
+          ],
+          "name": "unsubscribe",
+          "outputs": [],
+          "stateMutability": "payable",
+          "type": "function"
+    }
+    
+      
 ]

@@ -12,6 +12,7 @@ import Dappazon from '../abis/Dappazon.json'
 import config from '../config.json'
 import { ethers } from 'ethers'
 
+
 export default function MyItems({ contract }) {
     const [provider, setProvider] = useState(null)
     const [dappazon, setDappazon] = useState(null)
@@ -28,7 +29,8 @@ export default function MyItems({ contract }) {
 
     const togglePop = (item) => {
         setItem(item)
-        toggle ? setToggle(false) : setToggle(true)
+        toggle ? setToggle(false) : setToggle(true);
+        loadBlockchainData()
     }
 
     const loadBlockchainData = async () => {
@@ -50,6 +52,7 @@ export default function MyItems({ contract }) {
 
         const electronics = items.filter((item) => item.category === 'electronics')
         const clothing = items.filter((item) => item.category === 'instruments')
+        const toys = items.filter((item) => item.category === 'toys')
 
         setElectronics(electronics)
         setClothing(clothing)
@@ -86,9 +89,25 @@ export default function MyItems({ contract }) {
                         <br />
                         </> : <></>}
                         {electronics.length>0?
-                        <Row >
+                       <> <Row >
                             <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
-                        </Row >:<></>}
+                        </Row >
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        </>
+                        :<></>}
+
+{toys.length>0?
+                       <> <Row >
+                            <Section title={"Musical classes"} items={toys} togglePop={togglePop} />
+                        </Row ></>:<></>}
+
                         {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
                         {/* <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button> */}
                     </Container>
@@ -96,8 +115,9 @@ export default function MyItems({ contract }) {
             )}
 
             {toggle && (
-                <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} myItemsPage={true} />
+                <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} myItemsPage={true}  />
             )}
+            
         </div>
 
 

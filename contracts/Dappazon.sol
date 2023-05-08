@@ -1,4 +1,4 @@
- // SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
 contract Dappazon {
@@ -18,6 +18,7 @@ contract Dappazon {
         uint256 time;
         Item item;
     }
+
 
     mapping(uint256 => Item) public items;
     mapping(address => mapping(uint256 => Order)) public orders;
@@ -105,5 +106,59 @@ contract Dappazon {
         return allItems;
     }
 
+    function subscribe(uint256 _id) public payable {
+        // Fetch item
+        Item memory item = items[_id];
 
+        // Require enough ether to buy item
+        require(msg.value >= item.cost);
+
+        // Require item is in stock
+        require(item.stock > 0);
+
+        // Create order
+        Order memory order = Order(block.timestamp, item);
+
+        // Add order for user
+        orderCount[msg.sender]++; // <-- Order ID
+        orders[msg.sender][orderCount[msg.sender]] = order;
+
+        // Subtract stock
+        // items[_id].stock = item.stock - 1;
+
+        // Emit event
+        emit Buy(msg.sender, orderCount[msg.sender], item.id);
+    }
+
+    //unsubscribe the product and it will be available for other users
+    function unsubscribe(uint256 _id) public  payable {
+        // Fetch item
+        Item storage item = items[_id];
+
+
+        // Require user has bought the item before
+        require(orderCount[msg.sender] > 0);
+
+        // Get the last order for this item by the user
+        Order storage order = orders[msg.sender][orderCount[msg.sender]];
+
+        // Require the order is for this item
+        require(order.item.id == _id);
+
+        // Increase stock
+        // item.stock++;
+
+        // Emit event
+        emit Buy(msg.sender, orderCount[msg.sender], item.id);
+
+        delete orders[msg.sender][orderCount[msg.sender]];
+
+        // Decrease the order count for the user
+        orderCount[msg.sender]--;
+    }
 }
+
+
+
+
+

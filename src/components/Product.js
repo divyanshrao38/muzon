@@ -7,7 +7,7 @@ import Rating from './Rating'
 import close from '../assets/close.svg'
 import { Container, Row } from 'react-bootstrap'
 
-const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) => {
+const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage, isLessonPage }) => {
   const [order, setOrder] = useState(null)
   const [hasBought, setHasBought] = useState(false)
 
@@ -33,6 +33,25 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) 
     setHasBought(true)
     togglePop()
   }
+  const subscribe = async () => {
+    const signer = await provider.getSigner()
+
+    let transaction = await dappazon.connect(signer).subscribe(item.id,  { value: item.cost })
+    await transaction.wait()
+
+    setHasBought(true)
+    togglePop()
+  }
+
+  const unsubscribe = async () => {
+    const signer = await provider.getSigner()
+
+    let transaction = await dappazon.connect(signer).unsubscribe(item.id,{ value: item.cost })
+    await transaction.wait()
+
+    setHasBought(true)
+    togglePop()
+  }
 
   useEffect(() => {
     fetchDetails()
@@ -53,7 +72,7 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) 
 
           <p>{item.address}</p>
 
-          <h2>{ethers.utils.formatUnits(item.cost.toString(), 'ether')} ETH</h2>
+          <h2>{ethers.utils.formatUnits(item?.cost?.toString(), 'ether')} ETH</h2>
 
           <hr />
 
@@ -91,12 +110,15 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) 
             <p>Out of Stock.</p>
           )}
 
-        {!myItemsPage &&  <button className='product__buy' onClick={buyHandler}>
+        {(!myItemsPage && !isLessonPage)  &&  <button className='product__buy' onClick={buyHandler}>
             Buy Now
           </button>}
+         {isLessonPage &&  <button className='product__buy' onClick={subscribe}>
+            Subscribe Now
+          </button>} 
 
-          <p><small>Ships from</small> Team Doge</p>
-          <p><small>Sold by</small> Team Doge</p>
+         {item?.category !=="toys" &&<> <p><small>Ships from</small> Team Doge</p>
+          <p><small>Sold by</small> Team Doge</p></>}
 
           {order && (
             <div className='product__bought'>
@@ -109,12 +131,19 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage }) 
                     hour: 'numeric',
                     minute: 'numeric',
                     second: 'numeric'
-                  })}
+                  })
+                }
               </strong>
             </div>
           )}
+
+          {(item?.category =="toys" && myItemsPage) &&  <button className='product__buy' onClick={unsubscribe}>
+            Unsubscribe Now
+          </button>} 
+
         </Row>
 
+        
 
         <button onClick={togglePop} className="product__close">
           <img src={close} alt="Close" />

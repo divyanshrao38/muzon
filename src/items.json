@@ -53,6 +53,33 @@
       "price": "1.25",
       "rating": 4,
       "stock": 0
+    },
+    {
+      "id": 7,
+      "name": "Guitar Classes",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "price": "1.25",
+      "rating": 4,
+      "stock": 100
+    },
+    {
+      "id": 8,
+      "name": "Piano Classes",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "price": "1.25",
+      "rating": 4,
+      "stock": 100
+    },
+    {
+      "id": 9,
+      "name": "Violin Classes",
+      "category": "toys",
+      "image": "https://ipfs.io/ipfs/QmPKSE1W7DymWBiF6cxYEnU1sef6YSNadvntnqdaVTspk4?filename=amplifier.jpeg",
+      "price": "1.25",
+      "rating": 4,
+      "stock": 100
     }
   ]
 }

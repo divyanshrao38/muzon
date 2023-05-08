@@ -40,10 +40,14 @@ function App() {
 
   const [item, setItem] = useState({})
   const [toggle, setToggle] = useState(false)
+  const [lessonToggle, setLessonToggle] = useState(false)
 
   const togglePop = (item) => {
-    setItem(item)
+    console.log("item",item);
+    if(item) setItem(item) 
     toggle ? setToggle(false) : setToggle(true)
+    item?.category == "toys"? setLessonToggle(true) : setLessonToggle(false)
+
   }
 
   const loadBlockchainData = async () => {
@@ -85,11 +89,11 @@ function App() {
     loadBlockchainData()
   }, [])
 
-  const handleMusicNft = async() => {
+  const handleMusicNft = async () => {
     const signer = await provider.getSigner()
-    console.log('here',dappazon)
+    console.log('here', dappazon)
     const items = await dappazon.getAllItems()
-    console.log('here items',items)
+    console.log('here items', items)
   }
 
   return (
@@ -107,30 +111,45 @@ function App() {
                 {electronics && clothing && toys && (
                   <>
 
-                  <Container  className="mx-auto" fluid>
-                  <Row >
-                    <Section title={"Musical Instruments"} items={clothing} togglePop={togglePop} />
-                    </Row>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <Row >
-                    <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
-                    </Row >
-                    {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
-                    {/* <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button> */}
+                    <Container className="mx-auto" fluid>
+                      <Row >
+                        <Section title={"Musical Instruments"} items={clothing} togglePop={togglePop} />
+                      </Row>
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <Row >
+                        <Section title={"Musical Electronics"} items={electronics} togglePop={togglePop} />
+                      </Row >
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <br />
+                      <Row>
+                        <Section title={"Classes"} items={toys} togglePop={togglePop} isLessonPage={true} />
+                      </Row>
+                      {/* <Section title={"Toys & "} items={toys} togglePop={togglePop} /> */}
+                      {/* <Button onClick={() => { handleMusicNft() }}> Music NFTs</Button> */}
                     </Container>
                   </>
                 )}
 
                 {toggle && (
-                  <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} />
+                  <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} isLessonPage={lessonToggle} />
                 )}
+                {/* {lessonToggle && (
+                  <LessonProduct item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} />
+                )} */}
               </div>
             } />
             <Route path="/my-nfts" element={
