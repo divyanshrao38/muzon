@@ -6,7 +6,7 @@ import Product from './Product'
 import { Card, Button, ButtonGroup, Row, Container } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
 // ABIs
-import Dappazon from '../abis/Dappazon.json'
+import Muzon from '../abis/Muzon.json'
 
 // Config
 import config from '../config.json'
@@ -15,7 +15,7 @@ import { ethers } from 'ethers'
 
 export default function MyItems({ contract }) {
     const [provider, setProvider] = useState(null)
-    const [dappazon, setDappazon] = useState(null)
+    const [muzon, setDappazon] = useState(null)
     const [musicNft, setMusicNft] = useState(null)
     const [account, setAccount] = useState(null)
     // let naivgate = useNavigate();
@@ -43,11 +43,11 @@ export default function MyItems({ contract }) {
         const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         setAccount(accounts[0])
 
-        const dappazon = new ethers.Contract(config[network.chainId].dappazon.address, Dappazon, signer)
-        setDappazon(dappazon)
+        const muzon = new ethers.Contract(config[network.chainId].muzon.address, Muzon, signer)
+        setDappazon(muzon)
         console.log(contract)
 
-        const items = await dappazon.getAllItems()
+        const items = await muzon.getAllItems()
         console.log("bought itemsssss",items)
 
         const electronics = items.filter((item) => item.category === 'electronics')
@@ -64,7 +64,7 @@ export default function MyItems({ contract }) {
     }, [])
 
     const handleMusicNft = async () => {
-        const items = await dappazon.getAllItems()
+        const items = await muzon.getAllItems()
         console.log('here items', items)
     }
 
@@ -115,7 +115,7 @@ export default function MyItems({ contract }) {
             )}
 
             {toggle && (
-                <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} myItemsPage={true}  />
+                <Product item={item} provider={provider} account={account} muzon={muzon} togglePop={togglePop} myItemsPage={true}  />
             )}
             
         </div>

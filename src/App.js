@@ -12,7 +12,7 @@ import { Card, Button, ButtonGroup, Row, Container } from 'react-bootstrap'
 import "bootstrap/dist/css/bootstrap.min.css"
 
 // ABIs
-import Dappazon from './abis/Dappazon.json'
+import Muzon from './abis/Muzon.json'
 
 // Config
 import config from './config.json'
@@ -29,7 +29,7 @@ import MyTokens from './components/MyTokens'
 
 function App() {
   const [provider, setProvider] = useState(null)
-  const [dappazon, setDappazon] = useState(null)
+  const [muzon, setDappazon] = useState(null)
   const [musicNft, setMusicNft] = useState(null)
   const [account, setAccount] = useState(null)
   // let naivgate = useNavigate();
@@ -60,9 +60,9 @@ function App() {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setAccount(accounts[0])
 
-    const dappazon = new ethers.Contract(config[network.chainId].dappazon.address, Dappazon, signer)
-    setDappazon(dappazon)
-    console.log(dappazon)
+    const muzon = new ethers.Contract(config[network.chainId].muzon.address, Muzon, signer)
+    setDappazon(muzon)
+    console.log(muzon)
 
     const contractMusic = new ethers.Contract(MusicNFTMarketplaceAddress.address, MusicNFTMarketplaceAbi.abi, signer)
     setMusicNft(contractMusic)
@@ -71,7 +71,7 @@ function App() {
     const items = []
 
     for (var i = 0; i < 9; i++) {
-      const item = await dappazon.items(i + 1)
+      const item = await muzon.items(i + 1)
       items.push(item)
     }
     console.log(items)
@@ -91,8 +91,8 @@ function App() {
 
   const handleMusicNft = async () => {
     const signer = await provider.getSigner()
-    console.log('here', dappazon)
-    const items = await dappazon.getAllItems()
+    console.log('here', muzon)
+    const items = await muzon.getAllItems()
     console.log('here items', items)
   }
 
@@ -145,10 +145,10 @@ function App() {
                 )}
 
                 {toggle && (
-                  <Product item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} isLessonPage={lessonToggle} />
+                  <Product item={item} provider={provider} account={account} muzon={muzon} togglePop={togglePop} isLessonPage={lessonToggle} />
                 )}
                 {/* {lessonToggle && (
-                  <LessonProduct item={item} provider={provider} account={account} dappazon={dappazon} togglePop={togglePop} />
+                  <LessonProduct item={item} provider={provider} account={account} muzon={muzon} togglePop={togglePop} />
                 )} */}
               </div>
             } />
@@ -163,7 +163,7 @@ function App() {
               <MyTokens contract={musicNft} />
             } />
             <Route path="/my-items" element={
-              <MyItems contract={dappazon} />
+              <MyItems contract={muzon} />
             } />
           </Routes>
         </div>

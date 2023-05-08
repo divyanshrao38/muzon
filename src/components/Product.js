@@ -7,19 +7,19 @@ import Rating from './Rating'
 import close from '../assets/close.svg'
 import { Container, Row } from 'react-bootstrap'
 
-const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage, isLessonPage }) => {
+const Product = ({ item, provider, account, muzon, togglePop, myItemsPage, isLessonPage }) => {
   const [order, setOrder] = useState(null)
   const [hasBought, setHasBought] = useState(false)
 
   const fetchDetails = async () => {
-    const events = await dappazon.queryFilter("Buy")
+    const events = await muzon.queryFilter("Buy")
     const orders = events.filter(
       (event) => event.args.buyer === account && event.args.itemId.toString() === item.id.toString()
     )
 
     if (orders.length === 0) return
 
-    const order = await dappazon.orders(account, orders[0].args.orderId)
+    const order = await muzon.orders(account, orders[0].args.orderId)
     setOrder(order)
   }
 
@@ -27,7 +27,7 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage, is
     const signer = await provider.getSigner()
 
     // Buy item...
-    let transaction = await dappazon.connect(signer).buy(item.id, { value: item.cost })
+    let transaction = await muzon.connect(signer).buy(item.id, { value: item.cost })
     await transaction.wait()
 
     setHasBought(true)
@@ -36,7 +36,7 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage, is
   const subscribe = async () => {
     const signer = await provider.getSigner()
 
-    let transaction = await dappazon.connect(signer).subscribe(item.id,  { value: item.cost })
+    let transaction = await muzon.connect(signer).subscribe(item.id,  { value: item.cost })
     await transaction.wait()
 
     setHasBought(true)
@@ -46,7 +46,7 @@ const Product = ({ item, provider, account, dappazon, togglePop, myItemsPage, is
   const unsubscribe = async () => {
     const signer = await provider.getSigner()
 
-    let transaction = await dappazon.connect(signer).unsubscribe(item.id,{ value: item.cost })
+    let transaction = await muzon.connect(signer).unsubscribe(item.id,{ value: item.cost })
     await transaction.wait()
 
     setHasBought(true)

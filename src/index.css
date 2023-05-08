@@ -85,7 +85,7 @@ nav {
 }
 
 .nav__links li a:hover {
-  color: var(--clr-orange);
+  color: var(--clr-black);
 }
 
 .nav__search {
