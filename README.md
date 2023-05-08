@@ -83,7 +83,7 @@ Instructions: Requirments: • Metamask account
 In a separate terminal execute:
 `$ npx hardhat run ./scripts/deploy.js --network localhost`
 
-## for sepolia
+## for deploying in sepolia testnet
 `$ npx hardhat run ./scripts/deploy.js --network sepolia`
 
 ### 6. Start frontend
