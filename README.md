@@ -42,6 +42,10 @@ Professor Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 
 • Deployed the Contracts to Sepolia Test Network.
 
+• Added code to dynamically store deployed contact address for front end use.
+
+
+
 
 
 Project Repo URL https://github.com/divyanshrao38/muzon.git
