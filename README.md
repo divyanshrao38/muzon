@@ -1,7 +1,6 @@
 # Muzon
 
-![High level Architecture](https://user-images.githubusercontent.com/20090694/236734305-ab1f5528-dbea-4de4-b34e-672ecb845117.jpeg)
-
+<img width="527" alt="559" src="https://user-images.githubusercontent.com/87542822/236740752-a7589992-b4eb-48b5-a83e-2811cffe3373.png">
 
 CPSC 559 - Advance Blockchain Technology  Final Project By Team DOGE
 
