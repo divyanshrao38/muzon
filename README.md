@@ -1,6 +1,6 @@
 # Muzon
 
-<img width="527" alt="559" src="https://user-images.githubusercontent.com/87542822/236740752-a7589992-b4eb-48b5-a83e-2811cffe3373.png">
+<img width="1000" alt="559" src="https://user-images.githubusercontent.com/87542822/236740752-a7589992-b4eb-48b5-a83e-2811cffe3373.png">
 
 CPSC 559 - Advance Blockchain Technology  Final Project By Team DOGE
 
