@@ -18,7 +18,7 @@ Professor Prof. Wenlin Han, CSU Fullerton: whan@fullerton.edu
 ### Work Done:
 
 
-• Created Decentralized Retail app by following Online article https://www.dappuniversity.com/videos/X1ahXNYkpL8 Which inluded function to buy a item
+• Created Decentralized Retail app by following Online article https://www.dappuniversity.com/videos/X1ahXNYkpL8 Which inluded function to buy a item.
 
 • Created Music NFT Marketplace app by following Online article: https://www.dappuniversity.com/videos/Q_cxytZZdnc which included function to buy and resell NFT.
 
